@@ -1,0 +1,178 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+/* header */
+header {
+  background-color: rgb(84, 129, 228);
+  height: 50px;
+  line-height: 50px;
+  padding-left: 20px;
+}
+
+header > h1 {
+  margin: 0px;
+  font-size: 1.5em;
+  color: white;
+  font-weight: 600;
+}
+
+/* search */
+/* input의 경우, 부모 div가 block 이면 기본 넓이만큼만 차지하는데, 부모 div 가 display: flex, flex-direction: column 이면 가로 길이 다 차지한다. -> 이유가 뭘까? */
+.search {
+  margin: 20px;
+  padding: 20px;
+  border: 1.5px solid rgb(234,234,234);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.search > h1 {
+  font-size: 3em;
+  margin: 0px;
+  color: rgb(53, 58, 64);
+}
+
+.search > p {
+  color: rgb(139, 145, 152);
+  margin: 0px 0px 15px 0px;
+  font-size: 1.3em;
+}
+
+.search > input {
+  box-sizing: border-box;
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid rgb(234,234,234);
+}
+
+.search > input:hover {
+  border: 1.5px solid rgb(167, 167, 167);
+}
+
+
+/* profile */
+.profile {
+  margin: 20px;
+  padding: 20px;
+  border: 1.5px solid rgb(234,234,234);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+}
+.profile_img_btn {
+  display: flex;
+  flex-direction: column;
+}
+.profile_img_btn > img {
+  width: 300px;
+  height: 300px;
+}
+.profile_img_btn > button {
+  /* 왜 버튼은 가로를 설정 안해줘도 위의 이미지 가로를 따라가지? */
+  height: 45px;
+  margin-top: 20px;
+  border-radius: 18px;
+  background-color: rgb(84, 129, 228);
+  color: white;
+  border: none;
+}
+
+
+/* 이미지 우측의 유저 정보 */
+.user-infos {
+  margin-left: 30px;
+}
+
+.buttons > button {
+  padding: 8px 16px 8px 16px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: 100;
+}
+
+
+/* 이거 배열에 저장하고 돌리는 방법이 있지 않을까? */
+.buttons > button:nth-child(1) {
+  background-color: rgb(84, 129, 228);
+}
+
+.buttons > button:nth-child(2) {
+  background-color: rgb(174, 181, 188);
+}
+
+.buttons > button:nth-child(3) {
+  background-color: rgb(81, 178, 119);
+}
+
+.buttons > button:nth-child(4) {
+  background-color: rgb(76, 159, 181);
+}
+
+
+/* 유저 정보 리스트 */
+.info-list {
+  margin-top: 25px;
+  border: 1.5px solid rgb(234,234,234);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-list > p {
+  margin: 0px;
+  /* 예시는 이미지 하단에 딱 맞춰있던데 우연인지, 아니면 전체 세로 길이 box-sizing 다른거 써서 처리를 한건지? */
+  padding: 20px;
+}
+
+.info-list > p:not(:last-child) {
+  border-bottom: 1.5px solid rgb(234,234,234);
+}
+
+
+/* repos */
+.latest-repos {
+  margin-left: 20px;
+  color: rgb(53, 58, 64);
+  font-weight: 900;
+  margin-top: 1.1em;
+}
+
+.repos {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.repo {
+  border: 1.5px solid rgb(234,234,234);
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.repo > a {
+  text-decoration: none;  
+}
+
+/* width, height 지정하는 것 보다, padding, margin 으로 조절하는게 더 맞는 방법인가? */
+footer {
+  background-color: rgb(248, 249, 250);
+  height: 80px;
+  margin-top: 80px;
+  text-align: center;
+}
+
+footer > p {
+  line-height: 80px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
