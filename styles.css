@@ -187,3 +187,11 @@ footer > p {
   font-size: 1.1em;
   font-weight: 600;
 }
+
+
+
+/* 잔디밭 */
+#ghchart {
+  margin: 20px;
+  width: 90%;
+}

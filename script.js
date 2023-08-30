@@ -127,5 +127,14 @@ $input.addEventListener('input', async (value) => {
   // latest_repose 만큼 돌기
   Print_repos(latest_repos, $repos);
 
+
+
+
+  // -----------------------
+  // 잔디밭 기능
+  const $ghchart = document.querySelector('#ghchart');
+  $ghchart.setAttribute('src', `https://ghchart.rshah.org/${$input.value}`)
+
+
 })
 
