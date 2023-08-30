@@ -2,6 +2,9 @@
 const $input = document.querySelector('input');
 console.log($input);
 
+const $main = document.querySelector('main');
+const $spinner = document.querySelector('#spinner');
+
 // user api 불러오는 함수
 function User_API(user) {
   const result = fetch(`https://api.github.com/users/${user}`)
@@ -18,6 +21,20 @@ function User_Repos_API(user) {
   .catch(err => console.error(err));
 
   return result;
+}
+
+
+// spinner 확인
+function IsLoading(check) {
+  if (check) {
+    // 로딩 됐다면, main의 display: block, spinner - none
+    $main.classList.remove('disable');
+    $spinner.classList.add('disable');
+  } else {
+    // 아니라면, main - none, spinner - block
+    $main.classList.add('disable');
+    $spinner.classList.remove('disable');
+  }
 }
 
 function Print_repos(latest_repos, $repos) {
@@ -58,10 +75,16 @@ $input.addEventListener('input', async (value) => {
   // 근데 값을 어떻게 들고오지?
   console.log($input.value);
 
+  // 로딩 확인
+  IsLoading(false);
+
   // input 입력될 때 마다 api 호출
   let infos = await User_API($input.value);
   console.log(infos);
 
+  const repos_list = await User_Repos_API($input.value);
+
+  IsLoading(true)
   // --------------------- //
   // 이제 값 저장해야함
   // 저장할 요소 확인
@@ -115,7 +138,7 @@ $input.addEventListener('input', async (value) => {
   const $repos = document.querySelector('.repos');
   
   // 만약, 레포가 있으면 노드 만들어서 repos 밑에 붙이기 -> repos_list map으로 돌리기
-  const repos_list = await User_Repos_API($input.value);
+  // const repos_list = await User_Repos_API($input.value);
 
   // created_at 보고 최신거 확인해서 5개 추림
   const latest_repos = repos_list.sort((a, b) => a.created_at < b.created_at ? 1 : -1).slice(0, 5)

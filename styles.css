@@ -178,7 +178,8 @@ header > h1 {
 footer {
   background-color: rgb(248, 249, 250);
   height: 80px;
-  margin-top: 80px;
+  width: 100%;
+  margin-top: 230px;
   text-align: center;
 }
 
@@ -186,6 +187,7 @@ footer > p {
   line-height: 80px;
   font-size: 1.1em;
   font-weight: 600;
+  margin: auto;
 }
 
 
@@ -194,4 +196,19 @@ footer > p {
 #ghchart {
   margin: 20px;
   width: 90%;
+}
+
+
+/* spinner */
+/* main {
+  display: none;
+} */
+
+#spinner {
+  text-align: center;
+  margin-top: 200px;  
+}
+
+.disable {
+  display: none;
 }
