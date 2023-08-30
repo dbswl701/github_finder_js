@@ -46,6 +46,7 @@ header > h1 {
   height: 35px;
   border-radius: 5px;
   border: 1px solid rgb(234,234,234);
+  padding-left: 10px;
 }
 
 .search > input:hover {
@@ -70,7 +71,7 @@ header > h1 {
   width: 300px;
   height: 300px;
 }
-.profile_img_btn > button {
+.profile_img_btn > a {
   /* 왜 버튼은 가로를 설정 안해줘도 위의 이미지 가로를 따라가지? */
   height: 45px;
   margin-top: 20px;
@@ -78,12 +79,22 @@ header > h1 {
   background-color: rgb(84, 129, 228);
   color: white;
   border: none;
+  text-align: center;
+  line-height: 45px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 
 /* 이미지 우측의 유저 정보 */
 .user-infos {
   margin-left: 30px;
+}
+
+.buttons {
+  /* js로 노드 붙이면 그렇게 하지 않았을때에 비해 gap? margin?이 안들어가 있다. 이유는 모르겠다. */
+  display: flex;
+  gap: 5px;
 }
 
 .buttons > button {
