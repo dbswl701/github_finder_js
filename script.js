@@ -173,6 +173,10 @@ $input.addEventListener('input', async () => {
   const repos_list = await User_Repos_API($input.value);
   console.log(repos_list);
 
+  if ($input.value === '') {
+    $alert.classList.add('disable');
+  }
+
   if (infos !== null && repos_list !== null) {
     IsLoading(true);
   }
