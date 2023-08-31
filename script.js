@@ -50,7 +50,10 @@ function IsLoading(check) {
 
 function Print_repos(repos_list, $repos) {
   if (repos_list === null) return;
-  const latest_repos = repos_list.sort((a, b) => a.created_at < b.created_at ? 1 : -1).slice(0, 5);
+  const latest_repos = repos_list.sort((a, b) => a.created_at < b.created_at ? 1 : -1).slice(0, 5)
+
+  // $repos 내용 비우기
+  $repos.textContent = '';
 
   console.log(repos_list);
   console.log(latest_repos);
