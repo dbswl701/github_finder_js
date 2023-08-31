@@ -3,23 +3,34 @@ const $input = document.querySelector('input');
 console.log($input);
 
 const $main = document.querySelector('main');
-const $spinner = document.querySelector('#spinner');
+const $spinner = document.querySelector('.spinner');
 
 // user api 불러오는 함수
 function User_API(user) {
   const result = fetch(`https://api.github.com/users/${user}`)
-  .then(res => res.json())
-  .catch(err => console.error(err));
-
+  .then(res => {
+    if (res.status === 404) return null;
+    return  res.json();
+  })
+  .catch(error => {
+    // 에러 처리
+    console.error('Fetch error:', error);
+    return null;
+  });
   return result;
 }
 
 // user repos api 불러오는 함수
 function User_Repos_API(user) {
   const result = fetch(`https://api.github.com/users/${user}/repos`)
-  .then(res => res.json())
-  .catch(err => console.error(err));
-
+  .then(res => {
+    if (res.status === 404) return null;
+    return  res.json();
+  })  .catch(error => {
+    // 에러 처리
+    console.error('Fetch error:', error);
+    return null;
+  });
   return result;
 }
 
@@ -37,8 +48,14 @@ function IsLoading(check) {
   }
 }
 
-function Print_repos(latest_repos, $repos) {
-  console.log($repos);
+function Print_repos(repos_list, $repos) {
+  if (repos_list === null) return;
+  const latest_repos = repos_list.sort((a, b) => a.created_at < b.created_at ? 1 : -1).slice(0, 5);
+
+  console.log(repos_list);
+  console.log(latest_repos);
+
+  // console.log($repos);
   latest_repos.map((repo) => {
     // 아 그냥 jsx 쓸까...?
     const $repo = document.createElement('div');
@@ -70,25 +87,8 @@ function Print_repos(latest_repos, $repos) {
 
   })
 }
-
-$input.addEventListener('input', async (value) => {
-  // 근데 값을 어떻게 들고오지?
-  console.log($input.value);
-
-  // 로딩 확인
-  IsLoading(false);
-
-  // input 입력될 때 마다 api 호출
-  let infos = await User_API($input.value);
-  console.log(infos);
-
-  const repos_list = await User_Repos_API($input.value);
-
-  IsLoading(true)
-  // --------------------- //
-  // 이제 값 저장해야함
-  // 저장할 요소 확인
-
+function Print_profile(infos) {
+  if (infos === null) return;
   // 프로필 이미지
   $profile_img = document.querySelector('.profile_img_btn > img');
   console.log($profile_img);
@@ -128,9 +128,33 @@ $input.addEventListener('input', async (value) => {
 
   const $blog = document.querySelector('#blog');
   $blog.textContent = `Website/Blog: ${infos.blog}`;
-  
+
   const $created_at = document.querySelector('#created_at');
   $created_at.textContent = `Member Since: ${infos.created_at.split('T')[0]}`;
+}
+
+$input.addEventListener('input', async (value) => {
+  // 근데 값을 어떻게 들고오지?
+  console.log($input.value);
+
+  // 로딩 확인
+  IsLoading(false);
+
+  // input 입력될 때 마다 api 호출
+  let infos = await User_API($input.value);
+  console.log(infos);
+
+  const repos_list = await User_Repos_API($input.value);
+  console.log(repos_list);
+
+  if (infos !== null && repos_list !== null) {
+    IsLoading(true);
+  }
+  // --------------------- //
+  // 이제 값 저장해야함
+  // 저장할 요소 확인
+
+  Print_profile(infos);
 
 
   // -----------------------
@@ -141,14 +165,13 @@ $input.addEventListener('input', async (value) => {
   // const repos_list = await User_Repos_API($input.value);
 
   // created_at 보고 최신거 확인해서 5개 추림
-  const latest_repos = repos_list.sort((a, b) => a.created_at < b.created_at ? 1 : -1).slice(0, 5)
 
   // const latest_repos = repos_list.slice(0, 5);
-  console.log(repos_list);
-  console.log(latest_repos);
+  // console.log(repos_list);
+  // console.log(latest_repos);
 
   // latest_repose 만큼 돌기
-  Print_repos(latest_repos, $repos);
+  Print_repos(repos_list, $repos);
 
 
 
@@ -160,4 +183,3 @@ $input.addEventListener('input', async (value) => {
 
 
 })
-
