@@ -1,20 +1,24 @@
 // 일단 입력 받기
 const $input = document.querySelector('input');
-console.log($input);
 
 const $main = document.querySelector('main');
 const $spinner = document.querySelector('.spinner');
+const $alert = document.querySelector('.alert');
 
 // user api 불러오는 함수
 function User_API(user) {
+  // 로딩 확인
+  IsLoading(false);
   const result = fetch(`https://api.github.com/users/${user}`)
   .then(res => {
-    if (res.status === 404) return null;
+    if (res.status === 404) throw new Error('Not Found'); // 404 에러 여기에서만 이렇게 처리할 수 있나?
+    $alert.classList.add('disable');
     return  res.json();
   })
   .catch(error => {
-    // 에러 처리
     console.error('Fetch error:', error);
+    $alert.classList.remove('disable');
+    $spinner.classList.add('disable');
     return null;
   });
   return result;
@@ -22,13 +26,17 @@ function User_API(user) {
 
 // user repos api 불러오는 함수
 function User_Repos_API(user) {
+  // 로딩 확인
+  IsLoading(false);
   const result = fetch(`https://api.github.com/users/${user}/repos`)
   .then(res => {
-    if (res.status === 404) return null;
+    if (res.status === 404) throw new Error('Not Found'); // 404 에러 여기에서만 이렇게 처리할 수 있나?
+    $alert.classList.add('disable');
     return  res.json();
   })  .catch(error => {
-    // 에러 처리
     console.error('Fetch error:', error);
+    $alert.classList.remove('disable');
+    $spinner.classList.add('disable');
     return null;
   });
   return result;
@@ -45,6 +53,18 @@ function IsLoading(check) {
     // 아니라면, main - none, spinner - block
     $main.classList.add('disable');
     $spinner.classList.remove('disable');
+  }
+}
+
+// input 비어있는지 확인
+function Check_filled(value) {
+  // 비어있으면 main, spinner disable
+  if (value === '') {
+    $main.classList.add('disable');
+    $spinner.classList.add('disable');
+  } else {
+    $main.classList.remove('disable');
+    // $spinner.classList.add('disable');
   }
 }
 
@@ -136,12 +156,15 @@ function Print_profile(infos) {
   $created_at.textContent = `Member Since: ${infos.created_at.split('T')[0]}`;
 }
 
-$input.addEventListener('input', async (value) => {
+$input.addEventListener('input', async () => {
   // 근데 값을 어떻게 들고오지?
   console.log($input.value);
 
-  // 로딩 확인
-  IsLoading(false);
+  // // 로딩 확인
+  // IsLoading(false);
+
+  // 만약 input이 비어있다면 -> main, spinner disable
+  Check_filled($input.value);
 
   // input 입력될 때 마다 api 호출
   let infos = await User_API($input.value);
